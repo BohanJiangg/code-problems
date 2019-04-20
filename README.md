@@ -1,2 +1,2 @@
 # code-problems
-Solved Leetcode/Hackerrank Problems
+Solved CTCI/Leetcode Problems
