@@ -5,8 +5,8 @@ Leetcode: Linked List Cycle
 Given a linked list, determine if it has a cycle in it.
 
 To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
-Time Complexity O(n), 
-Space Complexity: O(1), 
+Time Complexity O(n), in the worst case, we iterate through the linked list once
+Space Complexity: O(1), only need two ptrs in both cases
 @author: bohan
 """
 
