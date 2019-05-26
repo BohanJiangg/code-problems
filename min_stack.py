@@ -14,8 +14,10 @@ Leetcode: Min Stack
     getMin() -- Retrieve the minimum element in the stack.
 
 
-Time Complexity: N/A
-Space Complexity: N/A 
+Time Complexity: O(n) in the worst case in pop() when the next minimum element has to be identified
+Space Complexity: O(n), length of the stack
+
+To get O(1) time complexity, use a second stack that keeps track of the minimums at that point in the stack (if < current min, push in stack)
 
 @author: bohan
 """
@@ -29,7 +31,6 @@ class MinStack(object):
         """
         self.minElement = None
         self.stack = []
-        self.orderKey = []
         
 
     def push(self, x):
@@ -38,22 +39,25 @@ class MinStack(object):
         :rtype: None
         """
         
-        if x < self.minElement:
+        if x < self.minElement or self.minElement == None:
             self.minElement = x
         self.stack.append(x)
         
         
-        
-
     def pop(self):
         """
         :rtype: None
         """
-        if self.stack.pop
-        toRet = self.stack.pop()
-        
-        return toRet
-        
+        if self.stack:
+            toRet = self.stack.pop()
+            if toRet == self.minElement:
+                if self.stack:
+                    self.minElement = min(self.stack)
+                else:
+                    self.minElement = None
+            return toRet
+        else:
+            return None
 
     def top(self):
         """
