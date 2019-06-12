@@ -28,13 +28,42 @@ class Solution(object):
         if not head or not head.next:
             return head
         
-        list_head = head
-        for i in range(m):
+        toret = head
+        if m == n:
+            return toret
+
+        stack = [] 
+        count = 1 
+
+        # Find ListNode right before node m
+        while head.next and count < m-1:
+            count += 1
             head = head.next
+
+        startPtr = head 
+
+        while count != n:
+            head = head.next
+            stack.append(head)
+            count += 1
         
-        m_ptr = head
-        weaver = head
-        weaver2 = head
+        if m == 1:
+            if n == 2:
+                toret = head
+                toret.next = startPtr
+                startPtr.next = endPtr
+                return toret
+            startPtr = toret = head
+        
+        endPtr = head.next
+
+        while not len(stack) == 0:
+            startPtr.next = stack.pop()
+            startPtr = startPtr.next
+        
+        startPtr.next = endPtr
+
+        return toret
 
 
 

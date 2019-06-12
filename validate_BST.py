@@ -43,31 +43,37 @@ class Solution(object):
         rightValid = self.checkBST(root.right, root.val, False, None)
         
         return leftValid and rightValid
-        
-        
-    def checkBST(self, root, val, checkMin, parentVal):
-        
+    
+
+    def checkBST(root, parentMin, parentMax):
         if root == None:
-           return True
-       
-        if checkMin:
-           if not root.val < val:
-               return False
-           
-           if parentVal and root.val < parentVal:
-                return False
-            
-        else:
-           if not root.val > val:
-               return False 
+            return True
         
-           if parentVal and root.val > parentVal:
-                return False
-               
-        leftValid = self.checkBST(root.left, root.val, True, min(parentVal, val))
+        leftValid = self.checkBST(root.left, min(root.val, parentMin), max(root.val, parentMax))
+        rightValid = self.checkBST(root.right, min(root.val, parentMin), max(root.val, parentMax))
+        if not leftValid or not rightValid:
+            return False
         
-        rightValid = self.checkBST(root.right, root.val, False, max(parentVal, val))
-       
-        return leftValid and rightValid
+        if not (root.right > root.val and root.right < parentMin):
+            return False
+        if not(root.left < root.val and root.left > parentMax): 
+            return False 
+        
+        
+
+
+
+
+
+
+
+
+        
+
+
+
+
+        
+    
        
        
