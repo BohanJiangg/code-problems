@@ -18,6 +18,16 @@ Note:
 2 <= K <= 10000
 
 
+As is typical with problems involving subarrays, we use prefix sums to add each subarray. Let P[i+1] = A[0] + A[1] + ... + A[i]. Then, each subarray can be written as P[j] - P[i] (for j > i). Thus, we have P[j] - P[i] equal to 0 modulo K, or equivalently P[i] and P[j] are the same value modulo K.
+
+P = [0]
+        for x in A:
+            P.append((P[-1] + x) % K)
+
+        count = collections.Counter(P)
+        return sum(v*(v-1)/2 for v in count.values())
+
+
 Time Complexity O(n), 
 Space Complexity: O(1), 
 @author: bohan
