@@ -28,4 +28,39 @@ class Solution(object):
         :type M: List[List[int]]
         :rtype: int
         """
+        if not M:
+            return 0
+        
+        fCircles = len(M)
+        toVisit = {}
+        visitQ = []
+        fGroups = {}
+
+        for i in range(fCircles):
+            fGroups[i] = [i]
+
+        for i in range(fCircles-1):
+            for j in range(i+1, fCircles):
+                toVisit[(j,i)] = M[j][i]
+                visitQ.append((j,i))
+            
+        
+        print(visitQ)
+    
+        while visitQ:
+            index = visitQ.pop()
+            i = index[0]
+            j = index[1]
+            if (i,j) in toVisit and M[i][j] == 1:
+                fCircles -= 1
+                if len(fGroups[j]) > 1:
+                    for person in fGroups[j]:
+                        if person > j and (person,i) in toVisit:
+                            del toVisit[(person, i)]
+
+                fGroups[j].append(i) 
+        return fCircles
+
+
+[(1, 0), (2, 0), (3, 0), (4, 0), (2, 1), (3, 1), (4, 1), (3, 2), (4, 2), (4, 3)]            
         

@@ -24,33 +24,49 @@ class Solution(object):
         :rtype: None Do not return anything, modify nums in-place instead.
         O(n) time, O(1) extra space?
         """
+
+        '''
+        Solution by finding median and using O(nlogn) time (due to sort) and O(1) space
+        '''
+        nums.sort()
+        
+        half = len(nums[::2]) - 1
+       
+        # even indexes, odd indexes = small, large
+        nums[0::2], nums[1::2] = nums[half::-1], nums[:half:-1]
         
 
-        for i in range(len(nums)):
-            
-            ptr1 = i
-            ptr2 = len(nums) - (i+1)
 
-            if ptr1 > ptr2:
-                break
-            
-            
 
-            
-            # if position is even, this is a small integer
-            if i % 2 == 0:
-                # Check if next number is smaller or equal to current number
-                if i - 1 > 0:
-                    if nums[i+1] <= nums[i]:
-                        # if so, swap with next larger integer.
-                        
+        '''
+        Solution by finding median in O(n log n) time (due to sort) and O(n) space because two additional lists are needed
+        '''
+        sortedNums = sorted(nums)
 
-            # if position is odd, this is a large integer
+        if len(sortedNums) % 2 == 0:
+            idx2 = len(sortedNums)/2 
+            median = (sortedNums[idx2] + sortedNums[idx2 - 1])/2
+            stopAt = len(sortedNums) / 2 - 1
+        else:
+            median = sortedNums[len(sortedNums)/2]
+            stopAt = len(sortedNums) /2
+
+        
+        smallNums = []
+        largeNums = []
+        for i in range(len(sortedNums)):
+            
+            if sortedNums[i] <= median and i <= stopAt:
+                smallNums.append(sortedNums[i])
             else:
+                largeNums.append(sortedNums[i])
 
-
-
-
+        for i in range(len(nums)):
+            if i % 2 ==0:
+                nums[i] = smallNums.pop()
+            else:
+                nums[i] = largeNums.pop()
+        
 
 
 
