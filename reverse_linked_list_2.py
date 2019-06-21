@@ -51,7 +51,7 @@ class Solution(object):
             if n == 2:
                 toret = head
                 toret.next = startPtr
-                startPtr.next = endPtr
+                startPtr.next = head.next
                 return toret
             startPtr = toret = head
         
