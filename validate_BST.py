@@ -51,6 +51,5 @@ class Solution(object):
         if not self.checkBST(root.right, val, maxVal):
             return False
         return True
-        
-       
+ 
        
