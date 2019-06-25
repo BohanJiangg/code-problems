@@ -15,8 +15,8 @@ Assume a BST is defined as follows:
     Both the left and right subtrees must also be binary search trees.
 
     
-Time Complexity: O(n), 
-Space Complexity: O(n), 
+Time Complexity: O(n), since we traverse tree only once
+Space Complexity: O(n), since we keep up to entire tree
 
 @author: bohan
 """
@@ -34,40 +34,23 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
+        
+        return self.checkBST(root)
+        
+        
+    def checkBST(self, root, minVal = float('-inf'), maxVal = float('inf')):
         if root == None:
             return True
-        if not root.left and not root.right:
-            return True
         
-        leftValid = self.checkBST(root.left, root.val, True, None)
-        rightValid = self.checkBST(root.right, root.val, False, None)
+        val = root.val
+        if val <= minVal or val >= maxVal:
+            return False
         
-        return leftValid and rightValid
+        if not self.checkBST(root.left, minVal, val):
+            return False
+        if not self.checkBST(root.right, val, maxVal):
+            return False
+        return True
         
-        
-    def checkBST(self, root, val, checkMin, parentVal):
-        
-        if root == None:
-           return True
-       
-        if checkMin:
-           if not root.val < val:
-               return False
-           
-           if parentVal and root.val < parentVal:
-                return False
-            
-        else:
-           if not root.val > val:
-               return False 
-        
-           if parentVal and root.val > parentVal:
-                return False
-               
-        leftValid = self.checkBST(root.left, root.val, True, min(parentVal, val))
-        
-        rightValid = self.checkBST(root.right, root.val, False, max(parentVal, val))
-       
-        return leftValid and rightValid
        
        
