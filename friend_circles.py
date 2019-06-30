@@ -17,8 +17,8 @@ Explanation:The 0th and 1st students are direct friends, so they are in a friend
 The 2nd student himself is in a friend circle. So return 2.
 
 
-Time Complexity O(n), 
-Space Complexity: O(1),
+Time Complexity O(N^2), since need to traverse every node in the matrix 
+Space Complexity: O(N), for visited list of length N
 @author: bohan
 """
 
@@ -31,34 +31,22 @@ class Solution(object):
         if not M:
             return 0
         
-        fCircles = len(M)
-        toVisit = {}
-        visitQ = []
-        fGroups = {}
-
-        for i in range(fCircles):
-            fGroups[i] = [i]
-
-        for i in range(fCircles-1):
-            for j in range(i+1, fCircles):
-                toVisit[(j,i)] = M[j][i]
-                visitQ.append((j,i))
-            
+        ppl = len(M)
         
-        print(visitQ)
-    
-        while visitQ:
-            index = visitQ.pop()
-            i = index[0]
-            j = index[1]
-            if (i,j) in toVisit and M[i][j] == 1:
-                fCircles -= 1
-                if len(fGroups[j]) > 1:
-                    for person in fGroups[j]:
-                        if person > j and (person,i) in toVisit:
-                            del toVisit[(person, i)]
-
-                fGroups[j].append(i) 
-        return fCircles
+        visited = []
+        res = 0
+        
+        def dfs(node):
+            for idx, value in enumerate(M[node]):
+                if value and not idx in visited:
+                    visited.append(idx)
+                    dfs(idx)
+                    
+        for i in range(ppl):
+            if not i in visited:
+                visited.append(i)
+                dfs(i)
+                res += 1
+        return res
 
 
