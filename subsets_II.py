@@ -9,8 +9,8 @@ Given a collection of integers that might contain duplicates, nums, return all p
 
 Note: The solution set must not contain duplicate subsets.
 
-Time Complexity: O(n)
-Space Complexity: O(1)
+Time Complexity: O(n^2), loop through nums at most n^2 if no dupes
+Space Complexity: O(n^2), if no dupes
 
 @author: bohan
 """
@@ -21,15 +21,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        power_set = self.recursive_sub(nums)
-        
-    def recursive_sub(self, nums):
-        if len(nums) == 1:
-            return nums
-        else:
-            power_list = []
-            for i in range(len(nums)):
-                tempList = []
-                
-                for j in range(i, len(nums)):
-                    tempList.
+        res = [[]]
+        nums.sort()
+        for i in range(len(nums)):
+            if i == 0 or nums[i] != nums[i - 1]:
+                l = len(res)
+            for j in range(len(res) - l, len(res)):
+                res.append(res[j] + [nums[i]])
+        return res
