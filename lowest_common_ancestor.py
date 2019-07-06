@@ -4,8 +4,8 @@ Created on Sun Jun  9 16:27:48 2019
 
 CTCI: Problem 4.8 - First Common Ancestor
 Leetcode: Lowest Common Ancestor of a Binary Tree
-Time Complexity: O(n),
-Space Complexity: O(n),  
+Time Complexity: O(n), iterate through all nodes of the tree at most twice (second time to get ancestors)
+Space Complexity: O(n), need to keep track of ancestors
 
 @author: bohan
 
@@ -34,40 +34,33 @@ class Solution(object):
         :rtype: TreeNode
         """
         
+        stack = [root]
         
-        pQueue  = [root]
-        qQueue  = [root]
-        pVisited = []
-        qVisited = []
+        parents = {root: None}
         
-        while pQueue:
-            print(pQueue)
-            curr = pQueue.pop()
-            pVisited.append(curr.val)
-            if curr.val == p.val:
-                break
-            else:
-                if curr.left:
-                    pQueue.append(curr.left)
-                if curr.right:
-                    pQueue.append(curr.right)
+        while not p in parents or not q in parents:
+            curr = stack.pop()
+            if curr.left:
+                stack.append(curr.left)
+                parents[curr.left] = curr
+            if curr.right:
+                stack.append(curr.right)
+                parents[curr.right] = curr
         
-        while qQueue:
-            curr = qQueue.pop()
-            qVisited.append(curr.val)
-            if curr.val == q.val:
-                break
-            else:
-                if curr.left:
-                    qQueue.append(curr.left)
-                if curr.right:
-                    qQueue.append(curr.right)
+        ancestors = set()
         
-    
+        while p:
+            ancestors.add(p)
+            p = parents[p]
         
-        if pVisited[-1] == p.val and qVisited[-1] == q.val:
-            print(pVisited)
-            print(qVisited)
+        while not q in ancestors:
+            q = parents[q]
+        return q
+        
+        
+        
+        
+        
             
     
         
