@@ -22,4 +22,18 @@ class Solution(object):
         :rtype: float
         """
         
+        # Case where either nums1 or nums2 is empty
+        if not nums1:
+            if len(nums2) % 2 == 1:
+                return nums2[int(len(nums2)/2)]
+            else:
+                return (nums2[int(len(nums2)/2)] + nums2[int(len(nums2)/2)-1])/2
+            
+        if not nums2:
+            if len(nums1) % 2 == 1:
+                return nums1[int(len(nums1)/2)]
+            else:
+                return (nums1[int(len(nums1)/2)] + nums1[int(len(nums1)/2)-1])/2
+        
+        
         
