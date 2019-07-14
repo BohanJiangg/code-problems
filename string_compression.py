@@ -2,7 +2,18 @@
 """
 Created on Sun May 12 13:40:57 2019
 
+Leetcode: String Compression
 CTCI: Problem 1.6 - String Compression
+
+Given an array of characters, compress it in-place.
+
+The length after compression must always be smaller than or equal to the original array.
+
+Every element of the array should be a character (not int) of length 1.
+
+After you are done modifying the input array in-place, return the new length of the array.
+
+
 Time Complexity: O(n), iterate through s only once
 Space Complexity: O(n), in general, since in worst case where no characters match the string is twice as long 
 
@@ -10,30 +21,37 @@ Space Complexity: O(n), in general, since in worst case where no characters matc
 """
 
 
-def string_compression(s):
+def string_compression(chars):
     
     prev_char = ''
-    compressed_string = ''
     charCount = 0
-    for char in s:
+    
+    for i in range(len(chars)):
+        char = chars.pop(0)
         if prev_char:
             if char == prev_char:
                 charCount += 1
             else:
-                compressed_string = compressed_string + prev_char + str(charCount)
+                if charCount > 1:
+                    chars.append(str(prev_char))
+                    for ch in str(charCount):
+                        chars.append(ch)
+                else:
+                    chars.append(str(prev_char))
                 prev_char = char
                 charCount = 1
         else:
             prev_char = char
             charCount = 1
     
-    compressed_string = compressed_string + prev_char + str(charCount)
+    chars.append(str(prev_char))
+    
+    if charCount > 1:
+        for ch in str(charCount):
+            chars.append(ch)
     
     
-    if len(compressed_string) > len(s):
-        return s
-    else:
-        return compressed_string
+    return len(chars)
     
 
 

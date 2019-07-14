@@ -17,9 +17,9 @@ Space Complexity: O(1),
 class Solution(object):
     def findMedianSortedArrays(self, nums1, nums2):
         """
-        :type nums1: List[int]
         :type nums2: List[int]
         :rtype: float
+        :type nums1: List[int]
         """
         
         # Case where either nums1 or nums2 is empty
