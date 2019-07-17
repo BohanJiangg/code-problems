@@ -3,41 +3,30 @@
 Created on Sun May 12 14:08:22 2019
 
 CTCI: Problem 1.7 - Rotate Matrix
-Time Complexity: O(n),
-Space Complexity: O(n),  
+Leetcode: Rotate Image
+
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+Note:
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+
+Time Complexity: O(n), iterate through all values in matrix
+Space Complexity: O(1), in-place nested list iteration
 
 @author: bohan
 """
 
 
-
-# function that rotates the matrix by 90 degrees
-def rotate_matrix(coords_list):
-    
-    
-    
-    
-    
-    
-    return coords_list
-
-
-
-
-
-if __name__ == "__main__":
-    # Size of image
-    m = 3
-    n = 3
-    
-    image_coords = []
-    num = 0
-    for i in range(1,m+1):
-        row = []
-        for j in range(1,n+1):
-            num+=1
-            row.append(num)
-        image_coords.append(row)
-            
-    print(image_coords)
-    print(rotate_matrix(image_coords))
+class Solution(object):
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        matrix[:] = [ [row[i] for row in matrix[::-1]] for i in range(len(matrix))]
+        
+        
+        
