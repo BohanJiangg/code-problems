@@ -23,11 +23,35 @@ class Solution(object):
         :rtype: int
         """
         
+        prefixSums = [0]
+        
         expandedA = A + A[0:len(A)]
         
+        for i in expandedA:
+            prefixSums.append(i+prefixSums[-1])
         
         
+        ans = A[0]
+        q = [0]
         
+        for j in range(1, len(prefixSums)):
+            
+            if q[0] < j - len(A):
+                q.pop(0)
+            ans = max(ans, prefixSums[j] - prefixSums[q[0]])
+            
+            # Remove any i1's with P[i2] <= P[i1].
+            while q and prefixSums[j] <= prefixSums[q[-1]]:
+                q.pop(-1)
+            
+            q.append(j)
+            print(q)
+        
+        
+        return ans
+        
+        
+            
         
         
         
