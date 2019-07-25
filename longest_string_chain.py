@@ -42,13 +42,14 @@ class Solution(object):
             else:
                 wordDict[length].append(word)
         
-        count = 1
+        count = 0
         currChain = set()
         for word in wordDict[minLen]:
             currChain.add(word)
         minLen += 1
 
         while minLen in wordDict and currChain:
+            count+=1
             for i in range(len(currChain)):
                 curr = currChain.pop()
                 for word in wordDict[minLen]:
@@ -58,15 +59,27 @@ class Solution(object):
                             word = word.replace(ch, '')
                     if len(word) ==1:
                         currChain.add(temp)
-                        count+=1
+                        
             minLen += 1
             
         
-        return count
+        return count+1
 
 
 
 
+'''
+Sort the words by word's length. (also can appply bucket sort)
+For each word, loop on all possible previous word with 1 letter missing.
+If we have seen this previous word, update the longest chain for the current word.
+Finally return the longest word chain.
 
+def longestStrChain(self, words):
+        dp = {}
+        for w in sorted(words, key=len):
+            dp[w] = max(dp.get(w[:i] + w[i + 1:], 0) + 1 for i in xrange(len(w)))
+        return max(dp.values())
+
+'''
 
         
