@@ -7,8 +7,19 @@ Leetcode: Permutations II
 
 Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 
-Time Complexity: O(n), one loop to go through every n
-Space Complexity: O(1), only need to keep 3 constants.
+Example:
+
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
+
+
+Time Complexity: O(n), 
+Space Complexity: O(1), 
 
 @author: bohan
 
@@ -21,5 +32,4 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        
         
