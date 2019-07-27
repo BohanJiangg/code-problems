@@ -16,8 +16,8 @@ Input: ["a","b","ba","bca","bda","bdca"]
 Output: 4
 Explanation: one of the longest word chain is "a","ba","bda","bdca".
 
-Time Complexity O(n), 
-Space Complexity: O(1), 
+Time Complexity O(n log n), need to sort words 
+Space Complexity: O(n), need dp dict to store values we've seen before 
 @author: bohan
 """
 
@@ -31,55 +31,14 @@ class Solution(object):
         if not words:
             return 0
 
-        wordDict = {}
-        minLen = len(words[0])
-        for word in words:
-            length = len(word)
-            if length < minLen:
-                minLen = length
-            if not length in wordDict:
-                wordDict[length] = [word]
-            else:
-                wordDict[length].append(word)
-        
-        count = 0
-        currChain = set()
-        for word in wordDict[minLen]:
-            currChain.add(word)
-        minLen += 1
-
-        while minLen in wordDict and currChain:
-            count+=1
-            for i in range(len(currChain)):
-                curr = currChain.pop()
-                for word in wordDict[minLen]:
-                    temp = word
-                    for ch in curr:
-                        if ch in word:
-                            word = word.replace(ch, '')
-                    if len(word) ==1:
-                        currChain.add(temp)
-                        
-            minLen += 1
-            
-        
-        return count+1
-
-
-
-
-'''
-Sort the words by word's length. (also can appply bucket sort)
-For each word, loop on all possible previous word with 1 letter missing.
-If we have seen this previous word, update the longest chain for the current word.
-Finally return the longest word chain.
-
-def longestStrChain(self, words):
         dp = {}
-        for w in sorted(words, key=len):
-            dp[w] = max(dp.get(w[:i] + w[i + 1:], 0) + 1 for i in xrange(len(w)))
-        return max(dp.values())
-
-'''
-
+        for word in words:
+            dp[word] = 1
         
+        for word in sorted(words, key=len)[::-1]:
+            for i in range(len(word)):
+                mod = word[:i] + word[i+1:]
+                if mod in dp:
+                    dp[mod] = max(dp[mod], 1+dp[word])
+        
+        return max(dp.values())
