@@ -2,7 +2,6 @@
 """
 Created on Sat May 25 14:26:00 2019
 
-
 CTCI: Problem 2.4 - Partition
 Leetcode: Partition List
 

@@ -26,6 +26,8 @@ class Solution(object):
         :rtype: int
         """
         
+
+        # Recursion depth limit exceeded
         if N == 1:
             return 0
         # make adj matrix
@@ -34,8 +36,14 @@ class Solution(object):
         for item in times:
             graph[item[0]].append((item[2], item[1]))
          
+        '''
+        [[],[],[(1,1), (1,4)],[(1,4)],[]]
+        '''
         dist = {node: float('inf') for node in range(1, N+1)}
-        
+        '''
+        {1: inf, 2:inf, 3:inf, 4:inf}
+        '''
+
         def dfs(node, elapsed):
             if dist[node] < elapsed: 
                 return
@@ -46,6 +54,7 @@ class Solution(object):
                 dfs(item[1], elapsed + item[0])
         
         dfs(K, 0)
+
         ans = max(dist.values())
         if ans < float('inf'):
             return ans
