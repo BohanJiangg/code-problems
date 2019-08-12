@@ -32,38 +32,10 @@ class Solution(object):
         if not s:
             return None
         
-        def decode(substr, times):
-            toRet = ''
-            nextTimes = i = 0
-            while i < len(substr):
-                if substr[i] in '123456789':
-                    toPass = ''
-                    nextTimes = int(substr[i])
-                    i+=2
-                    while substr[i] != ']':
-                        toPass += substr[i]
-                        i+=1
-                    toRet += decode(toPass, nextTimes)
-                else:
-                    toRet += substr[i]
-                
-                i+=1 
-            return toRet * times
-        # "3[a2[c]]"
-        i = 0
-        toRet = ''
-        while i < len(s):
-            if s[i] in '123456789':
-                toPass = ''
-                nextTimes = int(s[i])
-                i+=2
-                while s[i] != ']':
-                    toPass += s[i]
-                    i+=1
-                toRet += decode(toPass, nextTimes)
-            else:
-                toRet += s[i]
-            i+=1
+        stack = []
+        
+
+
         return toRet
 
 
