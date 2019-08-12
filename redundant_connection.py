@@ -31,8 +31,8 @@ Explanation: The given undirected graph will be like this:
     4 - 3
 
 
-Time Complexity: O(n), 
-Space Complexity: O(n),
+Time Complexity: O(n^2), In the worst case, for every edge we include, we have to search every previously-occurring edge of the graph.
+Space Complexity: O(n), need a graph to store all edges
 
 @author: bohan
 """
@@ -43,30 +43,25 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-        
-        adj_list = {}
-        for edge in edges:
-            if not edge[0] in adj_list:
-                adj_list[edge[0]] = [edge[1]]
-        
-            else:
-                adj_list[edge[0]].append(edge[1])
-        
-        
-        visited = []
-        
-        def dfs(node):
-            if node in visted:
-                return node
-            else:
-                for node in adj_list[node]:
-                    if node in visited:
-                        
-                    
-            
-        
-        
-        
+     
+        if not edges:
+            return None 
+        graph = collections.defaultdict(set)
+
+        def dfs(source, target):
+            if source not in seen:
+                seen.add(source)
+                if source == target: return True
+                return any(dfs(nei, target) for nei in graph[source])
+
+        for u, v in edges:
+            seen = set()
+            if u in graph and v in graph and dfs(u, v):
+                return u, v
+            graph[u].add(v)
+            graph[v].add(u)
+
+
         
         
         
