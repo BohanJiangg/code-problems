@@ -40,15 +40,13 @@ class Solution(object):
         if len(s) == 1 and s != '0':
             return 1
 
-        one_letters = 0
-        for ch in s:
-            if ch != '0':
-                one_letters+=1
-        
-        two_letters = 0
-        for i in range(1, len(s)):
-            if int()
+        cnt = 0
+        def ways(idx):
+            if 
 
+        
+            
+        return ways(0)
 
 
 
