@@ -22,8 +22,8 @@ We could return these lists in any order, for example the answer [['Mary', 'mary
 ['John', 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com']] would still be accepted.
 
 
-Time Complexity: O(n), 
-Space Complexity: O(n),
+Time Complexity: O(sum(len(accounts))*log(len(accounts))), to build the graph and then sort 
+Space Complexity: O(sum(len(accounts))), need to build the graph and search
 
 @author: bohan
 """
@@ -36,7 +36,48 @@ class Solution(object):
         :rtype: List[List[str]]
         """
         
-        graph = {}
-        
+        if not accounts:
+            return None
+
+        if len(accounts) == 1:
+            return accounts 
+
+        # graph of email addresses to a list of other email addresses
+        # {"johnsmith@mail.com": set('john_newyork@mail.com', 'johnnybravo@mail.com')}
+        graph = collections.defaultdict(set)
+        # dict of person's one email to name
+        # to run DFS on
+        email_to_name = {}
+
         for item in accounts:
-             
+            name = item[0]
+        
+            for email in item[1:]:
+                graph[email].add(item[1])
+                graph[item[1]].add(email)
+                email_to_name[email] = name
+        
+        
+        
+        visited = set()
+        toRet = []
+
+        for email in graph:
+            if email not in visited:
+                visited.add(email)
+                stack = [email]
+                emails = []
+                while stack:
+                    curr = stack.pop(0)
+                    emails.append(curr)
+                    for nei in graph[curr]:
+                        if nei not in visited:
+                            stack.append(nei)
+                            visited.add(nei)
+                
+                toRet.append([email_to_name[email]] + sorted(emails))
+        
+        return toRet
+
+
+
