@@ -33,6 +33,8 @@ class Solution(object):
             return None
         
         stack = []
+
+        
         
 
 

@@ -42,10 +42,16 @@ class Solution(object):
 
         cnt = 0
         def ways(idx):
-            if 
+            if idx == len(s):
+                return 1
+            else:
+                cnt = 0
+                if s[idx] in '123456789':
+                    cnt += 1
+                    if idx+1 < len(s) and idx[i+1]
 
         
-            
+
         return ways(0)
 
 
