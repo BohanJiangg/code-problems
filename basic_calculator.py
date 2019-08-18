@@ -21,49 +21,63 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        if not s:
+            return None
+        
+        
         s = s.replace(" ", "")
         
-        stack = []
-        
+        numStk = []
+        opStk = []
+        prevDigit = False
+        openList = []
         for ch in s:
-            if ch in '()+-':
-                stack.insert(0, ch)
+            if ch in '+-':
+                opStk.append(ch)
+                prevDigit = False
+            elif ch.isdigit():
+                if prevDigit:
+                    numStk.append(int(str(numStk.pop(-1))+ch))
+                else:
+                    numStk.append(int(ch))
+                    prevDigit = True
+            elif ch == '(':
+                numStk.append(ch)
+                prevDigit = False
+                openList.append(len(numStk)-1)
             else:
-                stack.insert(0, int(ch))
+                # ch == ')'
+                start = openList.pop(-1)
+                numStk.pop(start)
                 
-        
-        opStack = []
-        
-        while stack:
-            curr = stack.pop()
-            if curr == ')':
-                opStack.append(curr)
-                while curr != '(':
-                    curr = stack.pop()
-                    opStack.append(curr)
+                for i in range(start, len(numStk)):
+                    first = numStk.pop(0)
+            second = numStk.pop(0)
+            op = opStk.pop(0)
                 
-                self.parensCalc(opStack)
-            else:
-                opStack.append(curr)
-        
-        
-    def parensCalc(self, stack):
-            num = 0
-            sign = '+'
-            curr = stack.pop()
-            while curr != ')':
-                    curr = stack.pop()
-                    if curr == '+':
-                        sign = '+'
-                    elif curr == '-':
-                        sign = '-'
-                    elif curr == ')':
-                        break
+                
+                curr = numStk.pop(-1)
+                while numStk[-1] != '(':
+                    first = numStk.pop(-1)
+                    op = opStk.pop(-1)
+                    if op == '+':
+                        curr = first + curr
                     else:
-                        if sign == '+':
-                            num += curr
-                        else:
-                            num -= curr
-            stack.append(num)
+                        curr = first - curr
+                numStk.pop(-1)
+                numStk.append(curr)
         
+        while len(numStk) > 1:
+            first = numStk.pop(0)
+            second = numStk.pop(0)
+            op = opStk.pop(0)
+            if op == '+':
+                curr = first + second
+            else:
+                curr = first - second
+            numStk.insert(0, curr)
+        
+        return numStk.pop()
+        
+    
         
