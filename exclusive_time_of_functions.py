@@ -43,7 +43,10 @@ class Solution(object):
         toRet = [0] * n
 
         def rec(times):
-            curr = 
+            time = times[0].split(':')
+            id = time[0]
+
+            
         
 
         return rec(logs)
