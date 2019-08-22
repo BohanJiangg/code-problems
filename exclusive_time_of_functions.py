@@ -41,12 +41,29 @@ class Solution(object):
         if n == 0:
             return []
         toRet = [0] * n
+        '''
+        2
+        ["0:start:0","0:start:2","0:end:5","1:start:6","1:end:6","0:end:7"]
+        [7,1]
+        [[0,0,2],[]]
+        '''
+        stack = []
+        first = logs[0].split(':')
+        stack.append( [int(first[0]), int(first[2])] )
+        currTime = int(first[2])
+        for item in logs[1:]:
+            item = item.split(':')
+            if item[1] == 'start':
+                currTime = int(item[2])
+                if stack:
+                    stack[-1].append(currTime - stack[-1][1])
+                stack.append([int(item[0]), currTime])
+            else:
+                res = stack.pop(-1)
+                if len(res) == 3:
+                    toRet[res[0]] = res[2] + (int(item[2]) - currTime)
+                else:
+                    toRet[res[0]] = (int(item[2]) - res[1])+1
+                currTime = int(item[2])
 
-        def rec(times):
-            time = times[0].split(':')
-            id = time[0]
-
-            
-        
-
-        return rec(logs)
+        return toRet  
