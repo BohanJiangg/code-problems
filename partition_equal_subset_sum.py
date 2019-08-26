@@ -24,6 +24,7 @@ Space Complexity: O(1),
 @author: bohan
 """
 
+
 class Solution(object):
     def canPartition(self, nums):
         """
@@ -32,3 +33,5 @@ class Solution(object):
         """
         
         
+
+
